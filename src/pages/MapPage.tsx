@@ -38,6 +38,15 @@ const MapPage = () => {
   return (
     <AppLayout>
       <Map pins={pins} onAddPin={locationHandler.handleAddPin} onPinClick={pinManager.handlePinClick} />
+
+      {!isLoading && pins.length === 0 && (
+        <div className="absolute bottom-24 left-1/2 -translate-x-1/2 z-30 pointer-events-none">
+          <div className="bg-card/90 backdrop-blur-sm border border-border rounded-xl px-5 py-3 shadow-lg text-center">
+            <p className="text-sm text-muted-foreground font-medium">Tap anywhere on the map to drop your first pin</p>
+          </div>
+        </div>
+      )}
+
       <FloatingActionButton onClick={locationHandler.handleFloatingButtonClick} />
       <AddPinModal isOpen={isAddingPin} onClose={handleCloseAddModal} onSave={handleSavePin} />
       <PinDetailsSheet pin={selectedPin} isOpen={!!selectedPin} onClose={() => setSelectedPin(null)} onEdit={pinManager.handleEditPin} onDelete={pinManager.handleDeletePin} />

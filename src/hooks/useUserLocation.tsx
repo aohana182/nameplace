@@ -92,7 +92,7 @@ export const useUserLocation = () => {
       globalLocationCache = { ...location, timestamp: Date.now() };
       setUserLocation(location);
       setLocationStatus('granted');
-      toast.success(`Location found! Accuracy: ${Math.round(position.coords.accuracy)}m`);
+      // Silent success — no toast needed
     } catch (error) {
       handleLocationError(error);
     } finally {

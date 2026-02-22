@@ -48,9 +48,7 @@ export const useMapInitialization = ({ userLocation, locationStatus, onAddPin }:
       mapInstanceRef.current = map;
       setIsMapReady(true);
 
-      toast.success(locationStatus === 'granted'
-        ? "Map loaded with your location! Click anywhere to add pins."
-        : "Map loaded with default location! Click anywhere to add pins.");
+      // No toast on map load — avoid unnecessary noise
 
       return () => {
         window.removeEventListener('resize', handleResize);
