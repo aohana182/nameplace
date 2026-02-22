@@ -15,6 +15,7 @@ interface AddPinModalProps { isOpen: boolean; onClose: () => void; onSave: (pinD
 
 export const AddPinModal = ({ isOpen, onClose, onSave }: AddPinModalProps) => {
   const [availableTags, setAvailableTags] = useState<Tag[]>([]);
+  const [hasAttemptedSubmit, setHasAttemptedSubmit] = useState(false);
   const { user } = useAuth();
   const { name, setName, description, setDescription, tags, setTags, resetForm, isValid, getFormData } = usePinForm();
 
@@ -27,8 +28,14 @@ export const AddPinModal = ({ isOpen, onClose, onSave }: AddPinModalProps) => {
     loadAvailableTags();
   }, [user]);
 
-  const handleSave = () => { if (!isValid) { toast.error("Name is required!"); return; } onSave(getFormData()); resetForm(); };
-  const handleClose = () => { resetForm(); onClose(); };
+  const handleSave = () => {
+    setHasAttemptedSubmit(true);
+    if (!isValid) { toast.error("Name is required!"); return; }
+    onSave(getFormData());
+    resetForm();
+    setHasAttemptedSubmit(false);
+  };
+  const handleClose = () => { resetForm(); setHasAttemptedSubmit(false); onClose(); };
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => { if (!open) handleClose(); }} modal={true}>
@@ -38,7 +45,7 @@ export const AddPinModal = ({ isOpen, onClose, onSave }: AddPinModalProps) => {
           <div className="space-y-2">
             <Label htmlFor="name">Name *</Label>
             <Input id="name" placeholder="Enter pin name" value={name} onChange={(e) => setName(e.target.value.slice(0, 100))} maxLength={100} className="w-full text-base md:text-sm" autoFocus style={{ fontSize: '16px' }} />
-            {!isValid && <p className="text-red-500 text-sm">Name is required</p>}
+            {hasAttemptedSubmit && !isValid && <p className="text-destructive text-sm">Name is required</p>}
           </div>
           <div className="space-y-2">
             <Label htmlFor="description">Description</Label>
@@ -51,7 +58,7 @@ export const AddPinModal = ({ isOpen, onClose, onSave }: AddPinModalProps) => {
         </div>
         <div className="flex gap-3 pt-4">
           <Button variant="outline" onClick={handleClose} className="flex-1 h-12 touch-manipulation">Cancel</Button>
-          <Button onClick={handleSave} disabled={!isValid} className="flex-1 h-12 touch-manipulation">Create Pin</Button>
+          <Button onClick={handleSave} className="flex-1 h-12 touch-manipulation">Create Pin</Button>
         </div>
       </DialogContent>
     </Dialog>

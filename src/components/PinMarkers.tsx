@@ -71,21 +71,7 @@ export const PinMarkers = ({ map, pins, onPinClick, isMapReady }: PinMarkersProp
         zIndexOffset: 1000
       }).addTo(map);
 
-      const popupContent = `
-        <div style="text-align: center; min-width: 150px;">
-          <h3 style="font-weight: 600; margin: 0 0 8px 0; color: #1f2937;">${pin.name}</h3>
-          ${pin.description ? `<p style="font-size: 14px; color: #6b7280; margin: 8px 0; line-height: 1.4;">${pin.description}</p>` : ''}
-          ${firstTag ? `<div style="display: flex; align-items: center; justify-content: center; margin-top: 8px;">
-            <div style="width: 12px; height: 12px; border-radius: 50%; background-color: ${color}; margin-right: 8px;"></div>
-            <span style="font-size: 12px; color: #9ca3af;">${firstTag.name}</span>
-          </div>` : ''}
-          <button class="pin-details-btn" style="
-            background-color: ${color}; color: white; border: none;
-            padding: 6px 12px; border-radius: 4px; font-size: 12px;
-            margin-top: 8px; cursor: pointer;
-          ">View Details</button>
-        </div>
-      `;
+      // Click opens detail sheet directly — no popup needed
 
       marker.on('click', (e) => {
         e.originalEvent?.stopPropagation();
