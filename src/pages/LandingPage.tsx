@@ -1,8 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { MapPin, ArrowRight, Sparkles, Users, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/AuthContext";
 
 const LandingPage = () => {
+  const { user, loading } = useAuth();
+
+  if (!loading && user) {
+    return <Navigate to="/app" replace />;
+  }
+
   return (
     <div className="min-h-screen bg-background">
       {/* Nav */}
