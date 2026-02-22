@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, useCallback } from 'react';
 import L from 'leaflet';
 import { toast } from 'sonner';
 
@@ -11,6 +11,8 @@ interface UseMapInitializationProps {
 export const useMapInitialization = ({ userLocation, locationStatus, onAddPin }: UseMapInitializationProps) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const mapInstanceRef = useRef<L.Map | null>(null);
+  const onAddPinRef = useRef(onAddPin);
+  onAddPinRef.current = onAddPin;
   const [isMapReady, setIsMapReady] = useState(false);
 
   useEffect(() => {
@@ -30,12 +32,11 @@ export const useMapInitialization = ({ userLocation, locationStatus, onAddPin }:
       }).addTo(map);
 
       map.on('click', (e: L.LeafletMouseEvent) => {
-        // Don't trigger add-pin when clicking on an existing marker
         const target = e.originalEvent?.target as HTMLElement;
         if (target?.closest?.('.custom-pin-marker') || target?.closest?.('.custom-marker-wrapper')) {
           return;
         }
-        onAddPin({ lng: e.latlng.lng, lat: e.latlng.lat });
+        onAddPinRef.current({ lng: e.latlng.lng, lat: e.latlng.lat });
       });
 
       const handleResize = () => {
@@ -48,8 +49,6 @@ export const useMapInitialization = ({ userLocation, locationStatus, onAddPin }:
       mapInstanceRef.current = map;
       setIsMapReady(true);
 
-      // No toast on map load — avoid unnecessary noise
-
       return () => {
         window.removeEventListener('resize', handleResize);
       };
@@ -57,7 +56,7 @@ export const useMapInitialization = ({ userLocation, locationStatus, onAddPin }:
       console.error('Error initializing map:', error);
       toast.error("Error loading map. Please refresh the page.");
     }
-  }, [userLocation, locationStatus, onAddPin]);
+  }, [userLocation, locationStatus]);
 
   useEffect(() => {
     return () => {
@@ -68,5 +67,5 @@ export const useMapInitialization = ({ userLocation, locationStatus, onAddPin }:
     };
   }, []);
 
-  return { mapRef, mapInstanceRef: mapInstanceRef.current, isMapReady };
+  return { mapRef, mapInstanceRef, isMapReady };
 };
