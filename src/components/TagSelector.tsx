@@ -36,20 +36,20 @@ export const TagSelector = ({ availableTags, selectedTags, onTagsChange, onAvail
       <div className="flex gap-3">
         <Popover open={isOpen} onOpenChange={setIsOpen}>
           <PopoverTrigger asChild>
-            <Button variant="outline" size="sm" className="h-10 px-4 touch-manipulation"><Plus className="h-4 w-4 mr-2" />Add Tags</Button>
+            <Button variant="outline" size="sm" className="h-10 px-4 touch-manipulation rounded-lg"><Plus className="h-4 w-4 mr-2" />Add Tags</Button>
           </PopoverTrigger>
           <PopoverContent className="w-72 md:w-64 z-[10500]" align="start">
             <div className="space-y-2">
-              <div className="font-medium text-sm">Select Tags</div>
+              <div className="font-medium text-sm text-foreground">Select Tags</div>
               <ScrollArea className="h-40">
                 <div className="space-y-1">
                   {availableTags.length === 0 ? (
                     <p className="text-sm text-muted-foreground">No tags available</p>
                   ) : (
                     availableTags.map((tag) => (
-                      <div key={tag.id} className="flex items-center justify-between p-3 hover:bg-gray-50 rounded cursor-pointer touch-manipulation min-h-[44px]" onClick={() => toggleTag(tag)}>
+                      <div key={tag.id} className="flex items-center justify-between p-3 hover:bg-secondary rounded-lg cursor-pointer touch-manipulation min-h-[44px]" onClick={() => toggleTag(tag)}>
                         <Badge variant="secondary" style={{ backgroundColor: tag.color + '20', color: tag.color, border: `1px solid ${tag.color}40` }}>{tag.name}</Badge>
-                        {isTagSelected(tag) && <Check className="h-4 w-4 text-green-600" />}
+                        {isTagSelected(tag) && <Check className="h-4 w-4 text-primary" />}
                       </div>
                     ))
                   )}
@@ -58,7 +58,7 @@ export const TagSelector = ({ availableTags, selectedTags, onTagsChange, onAvail
             </div>
           </PopoverContent>
         </Popover>
-        <TagManager tags={availableTags} onTagsChange={onAvailableTagsChange} trigger={<Button variant="outline" size="sm" className="h-10 px-4 touch-manipulation">Manage Tags</Button>} />
+        <TagManager tags={availableTags} onTagsChange={onAvailableTagsChange} trigger={<Button variant="outline" size="sm" className="h-10 px-4 touch-manipulation rounded-lg">Manage Tags</Button>} />
       </div>
     </div>
   );

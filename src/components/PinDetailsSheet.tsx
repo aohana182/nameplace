@@ -75,20 +75,20 @@ export const PinDetailsSheet = ({ pin, isOpen, onClose, onEdit, onDelete }: PinD
   return (
     <>
       <Sheet open={isOpen} onOpenChange={handleOpenChange}>
-        <SheetContent side="bottom" className="h-[85vh] md:h-[80vh] max-h-[90vh] rounded-t-lg bg-white border-0 shadow-2xl overflow-hidden">
-          <SheetHeader className="pb-4 bg-white">
+        <SheetContent side="bottom" className="h-[85vh] md:h-[80vh] max-h-[90vh] rounded-t-2xl bg-background border-0 shadow-2xl overflow-hidden">
+          <SheetHeader className="pb-4 bg-background">
             <SheetTitle className="flex items-center justify-between">
-              <span>{isEditing ? "Edit Pin" : currentPin.name}</span>
+              <span className="font-serif">{isEditing ? "Edit Pin" : currentPin.name}</span>
               {!isEditing && (
                 <div className="flex gap-2">
-                  <Button size="sm" variant="outline" onClick={handleEditClick} className="h-10 px-3 touch-manipulation" type="button"><Edit className="h-4 w-4 mr-1" /><span className="hidden sm:inline">Edit</span></Button>
-                  <Button size="sm" variant="outline" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setShowDeleteAlert(true); }} className="hover:bg-red-50 hover:border-red-200 h-10 px-3 touch-manipulation" type="button"><Trash2 className="h-4 w-4 mr-1" /><span className="hidden sm:inline">Delete</span></Button>
+                  <Button size="sm" variant="outline" onClick={handleEditClick} className="h-10 px-3 touch-manipulation rounded-lg" type="button"><Edit className="h-4 w-4 mr-1" /><span className="hidden sm:inline">Edit</span></Button>
+                  <Button size="sm" variant="outline" onClick={(e) => { e.preventDefault(); e.stopPropagation(); setShowDeleteAlert(true); }} className="hover:bg-destructive/10 hover:border-destructive/30 hover:text-destructive h-10 px-3 touch-manipulation rounded-lg" type="button"><Trash2 className="h-4 w-4 mr-1" /><span className="hidden sm:inline">Delete</span></Button>
                 </div>
               )}
             </SheetTitle>
             <SheetDescription>{isEditing ? "Edit pin details" : "View and manage this pin"}</SheetDescription>
           </SheetHeader>
-          <div className="flex-1 bg-white overflow-y-auto">
+          <div className="flex-1 bg-background overflow-y-auto">
             {isEditing ? (
               <PinEditForm name={name} setName={setName} description={description} setDescription={setDescription} tags={tags} setTags={setTags} availableTags={availableTags} onAvailableTagsChange={setAvailableTags} isValid={isValid} onSave={saveEdit} onCancel={cancelEdit} />
             ) : (

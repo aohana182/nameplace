@@ -53,10 +53,10 @@ export const Map = ({ pins, onAddPin, onPinClick }: MapProps) => {
       <MapStatusDisplay locationStatus={locationStatus} />
 
       {!isMapReady && (
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-100 z-20">
+        <div className="absolute inset-0 flex items-center justify-center bg-background z-20">
           <div className="text-center px-4">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-            <p className="text-muted-foreground text-lg">Loading map...</p>
+            <div className="animate-spin rounded-full h-10 w-10 border-2 border-primary border-t-transparent mx-auto mb-4"></div>
+            <p className="text-muted-foreground text-base">Loading map...</p>
             <p className="text-sm text-muted-foreground mt-2 max-w-xs mx-auto">
               {locationStatus === 'requesting' ? 'Getting your location...' : 'Initializing map...'}
             </p>

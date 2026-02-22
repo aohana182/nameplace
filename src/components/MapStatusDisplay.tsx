@@ -3,30 +3,30 @@ interface MapStatusDisplayProps {
 }
 
 export const MapStatusDisplay = ({ locationStatus }: MapStatusDisplayProps) => {
+  if (locationStatus === 'granted') return null;
+
   const getLocationStatusMessage = () => {
     switch (locationStatus) {
       case 'requesting':
         return '🌍 Getting your location...';
-      case 'granted':
-        return '📍 Your location found! Click anywhere to add a pin, or click existing pins to view details';
       case 'denied':
-        return '🚫 Location access denied. Using default location. Click anywhere to add a pin.';
+        return '📍 Location access denied — using default. Tap anywhere to add a pin.';
       case 'unavailable':
-        return '🌍 Location unavailable. Using default location. Click anywhere to add a pin.';
+        return '📍 Location unavailable — using default. Tap anywhere to add a pin.';
       default:
         return 'Loading map...';
     }
   };
 
   return (
-    <div className="absolute bottom-4 left-4 right-4 z-10">
-      <div className="bg-white/90 backdrop-blur-sm rounded-lg p-3 shadow-lg">
+    <div className="absolute top-20 left-4 right-4 z-10 pointer-events-none">
+      <div className="bg-card/90 backdrop-blur-md rounded-xl px-4 py-3 shadow-lg border border-border/50 max-w-sm mx-auto">
         <p className="text-sm text-muted-foreground text-center">
           {getLocationStatusMessage()}
         </p>
         {locationStatus === 'denied' && (
           <p className="text-xs text-muted-foreground text-center mt-1">
-            You can enable location access in your browser settings
+            Enable location in browser settings for better accuracy
           </p>
         )}
       </div>

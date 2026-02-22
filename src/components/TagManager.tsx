@@ -69,14 +69,14 @@ export const TagManager = ({ tags, onTagsChange, trigger }: TagManagerProps) => 
     <Dialog open={isOpen} onOpenChange={(open) => { setIsOpen(open); if (!open) { setEditingTag(null); setNewTagName(''); setSelectedColor(DEFAULT_TAG_COLORS[0]); setShowColorPicker(false); } }} modal={true}>
       <DialogTrigger asChild>{trigger || <Button variant="outline" size="sm"><Plus className="h-4 w-4 mr-2" />Manage Tags</Button>}</DialogTrigger>
       <DialogContent className="max-w-md max-h-[80vh] overflow-y-auto z-[11000]" onPointerDownOutside={(e) => e.stopPropagation()} onEscapeKeyDown={(e) => e.stopPropagation()}>
-        <DialogHeader><DialogTitle>Manage Tags</DialogTitle></DialogHeader>
+        <DialogHeader><DialogTitle className="font-serif">Manage Tags</DialogTitle></DialogHeader>
         <div className="space-y-4">
           {systemTags.length > 0 && (
             <div className="space-y-2">
-              <div className="flex items-center gap-2"><Label>Default Tags</Label><Shield className="h-4 w-4 text-blue-500" /></div>
-              <div className="space-y-2 max-h-32 overflow-y-auto bg-gray-50 p-2 rounded-md">
+              <div className="flex items-center gap-2"><Label>Default Tags</Label><Shield className="h-4 w-4 text-primary" /></div>
+              <div className="space-y-2 max-h-32 overflow-y-auto bg-secondary p-2 rounded-lg">
                 {systemTags.map((tag) => (
-                  <div key={tag.id} className="flex items-center justify-between p-2 border rounded-md bg-white">
+                  <div key={tag.id} className="flex items-center justify-between p-2 border border-border rounded-lg bg-card">
                     <Badge variant="secondary" style={{ backgroundColor: tag.color + '20', color: tag.color, border: `1px solid ${tag.color}40` }}>{tag.name}</Badge>
                     <div className="flex items-center gap-1 text-xs text-muted-foreground"><Shield className="h-3 w-3" /><span>Protected</span></div>
                   </div>
@@ -88,30 +88,30 @@ export const TagManager = ({ tags, onTagsChange, trigger }: TagManagerProps) => 
             <Label>Custom Tags</Label>
             <div className="space-y-2 max-h-40 overflow-y-auto">
               {userTags.length === 0 ? <p className="text-sm text-muted-foreground">No custom tags created yet</p> : userTags.map((tag) => (
-                <div key={tag.id} className="flex items-center justify-between p-2 border rounded-md">
+                <div key={tag.id} className="flex items-center justify-between p-2 border border-border rounded-lg">
                   <Badge variant="secondary" style={{ backgroundColor: tag.color + '20', color: tag.color, border: `1px solid ${tag.color}40` }}>{tag.name}</Badge>
                   <div className="flex gap-1">
                     <Button size="sm" variant="ghost" onClick={() => handleEditTag(tag)} className="h-6 w-6 p-0"><Edit2 className="h-3 w-3" /></Button>
-                    <Button size="sm" variant="ghost" onClick={() => handleDeleteTag(tag.id)} className="h-6 w-6 p-0 text-red-500 hover:text-red-700"><X className="h-3 w-3" /></Button>
+                    <Button size="sm" variant="ghost" onClick={() => handleDeleteTag(tag.id)} className="h-6 w-6 p-0 text-destructive hover:text-destructive"><X className="h-3 w-3" /></Button>
                   </div>
                 </div>
               ))}
             </div>
           </div>
-          <div className="space-y-3 p-3 border-t">
+          <div className="space-y-3 p-3 border-t border-border">
             <Label>{editingTag ? 'Edit Tag' : 'Add New Tag'}</Label>
             <div className="space-y-2">
               <Input placeholder="Tag name" value={newTagName} onChange={(e) => setNewTagName(e.target.value)} onKeyDown={(e) => { if (e.key === 'Enter') { editingTag ? handleSaveEdit() : handleAddTag(); } }} />
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
                   <Label>Color:</Label>
-                  <button type="button" className="w-6 h-6 rounded border-2 border-gray-300" style={{ backgroundColor: selectedColor }} onClick={() => setShowColorPicker(!showColorPicker)} />
+                  <button type="button" className="w-6 h-6 rounded-md border-2 border-border" style={{ backgroundColor: selectedColor }} onClick={() => setShowColorPicker(!showColorPicker)} />
                   <Button type="button" variant="ghost" size="sm" onClick={() => setShowColorPicker(!showColorPicker)} className="h-6 px-2"><Palette className="h-3 w-3" /></Button>
                 </div>
                 {showColorPicker && (
-                  <div className="flex flex-wrap gap-1 p-2 border rounded">
+                  <div className="flex flex-wrap gap-1 p-2 border border-border rounded-lg">
                     {DEFAULT_TAG_COLORS.map((color) => (
-                      <button key={color} type="button" className={`w-6 h-6 rounded border-2 ${selectedColor === color ? 'border-gray-800' : 'border-gray-300'}`} style={{ backgroundColor: color }} onClick={() => { setSelectedColor(color); setShowColorPicker(false); }} />
+                      <button key={color} type="button" className={`w-6 h-6 rounded-md border-2 transition-all ${selectedColor === color ? 'border-foreground scale-110' : 'border-border'}`} style={{ backgroundColor: color }} onClick={() => { setSelectedColor(color); setShowColorPicker(false); }} />
                     ))}
                   </div>
                 )}
