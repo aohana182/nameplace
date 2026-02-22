@@ -38,13 +38,13 @@ export const Map = ({ pins, onAddPin, onPinClick }: MapProps) => {
       />
 
       <UserLocationMarker
-        map={mapInstanceRef}
+        map={mapInstanceRef.current}
         userLocation={userLocation}
         locationStatus={locationStatus}
       />
 
       <PinMarkers
-        map={mapInstanceRef}
+        map={mapInstanceRef.current}
         pins={pins}
         onPinClick={onPinClick}
         isMapReady={isMapReady}
