@@ -19,7 +19,7 @@ export const useMapInitialization = ({ userLocation, locationStatus, onAddPin }:
     try {
       const map = L.map(mapRef.current, {
         center: [userLocation.lat, userLocation.lng],
-        zoom: locationStatus === 'granted' ? 15 : 12,
+        zoom: locationStatus === 'granted' ? 16 : 12,
         zoomControl: true,
         attributionControl: true,
       });

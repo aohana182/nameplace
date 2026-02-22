@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import L from 'leaflet';
 import { Pin } from '@/types/Pin';
 
@@ -12,6 +12,8 @@ interface PinMarkersProps {
 export const PinMarkers = ({ map, pins, onPinClick, isMapReady }: PinMarkersProps) => {
   const markersRef = useRef<{ [key: string]: L.Marker }>({});
   const lastPinsRef = useRef<Pin[]>([]);
+  const onPinClickRef = useRef(onPinClick);
+  onPinClickRef.current = onPinClick;
 
   useEffect(() => {
     if (!map || !isMapReady) return;
@@ -88,7 +90,7 @@ export const PinMarkers = ({ map, pins, onPinClick, isMapReady }: PinMarkersProp
       marker.on('click', (e) => {
         e.originalEvent?.stopPropagation();
         L.DomEvent.stopPropagation(e);
-        onPinClick(pin);
+        onPinClickRef.current(pin);
       });
 
       currentMarkers[pin.id] = marker;
