@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Pin } from '@/types/Pin';
@@ -28,16 +28,6 @@ export const Map = ({ pins, onAddPin, onPinClick }: MapProps) => {
     locationStatus,
     onAddPin
   });
-  const hasFittedRef = useRef(false);
-
-  // Auto-fit map to pins when they load
-  useEffect(() => {
-    if (!mapInstanceRef || !isMapReady || hasFittedRef.current || pins.length === 0) return;
-    
-    const bounds = L.latLngBounds(pins.map(p => [p.lat, p.lng] as L.LatLngTuple));
-    mapInstanceRef.fitBounds(bounds, { padding: [50, 50], maxZoom: 14 });
-    hasFittedRef.current = true;
-  }, [mapInstanceRef, isMapReady, pins]);
 
   return (
     <div className="absolute inset-0 w-full h-full">
