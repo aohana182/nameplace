@@ -35,7 +35,7 @@ export const PinManager = ({ onPinsChange, onPinSelect }: PinManagerProps) => {
     loadPinsFromDatabase();
   }, [onPinsChange, user]);
 
-  const handleSavePin = async (pinData: Omit<Pin, 'id' | 'createdAt'>, location: { lng: number; lat: number }) => {
+  const handleSavePin = async (pinData: Omit<Pin, 'id' | 'lng' | 'lat' | 'createdAt'>, location: { lng: number; lat: number }) => {
     if (!user) { toast.error('Please sign in to save pins'); return; }
 
     try {

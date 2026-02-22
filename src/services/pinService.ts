@@ -52,7 +52,7 @@ export const pinService = {
     });
   },
 
-  async createPin(pinData: Omit<Pin, 'id' | 'createdAt'>, location: { lng: number; lat: number }): Promise<Pin> {
+  async createPin(pinData: Omit<Pin, 'id' | 'lng' | 'lat' | 'createdAt'>, location: { lng: number; lat: number }): Promise<Pin> {
     const { data: user } = await supabase.auth.getUser();
     if (!user.user) throw new Error('User not authenticated');
 
