@@ -44,17 +44,23 @@ export const PinMarkers = ({ map, pins, onPinClick, isMapReady }: PinMarkersProp
       const customIcon = L.divIcon({
         html: `
           <div class="custom-pin-marker" style="
-            width: 30px; height: 30px; border-radius: 50%;
+            width: 32px; height: 32px; border-radius: 50%;
             background-color: ${color}; border: 3px solid white;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.25);
             display: flex; align-items: center; justify-content: center;
-            color: white; font-weight: bold; font-size: 12px;
+            color: white; font-weight: 600; font-size: 13px;
             cursor: pointer; position: relative; z-index: 1000;
-          " data-pin-id="${pin.id}">${pin.name.charAt(0).toUpperCase()}</div>
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+          " data-pin-id="${pin.id}"
+          onmousedown="this.style.transform='scale(0.9)'"
+          onmouseup="this.style.transform='scale(1.1)'"
+          ontouchstart="this.style.transform='scale(0.9)'"
+          ontouchend="this.style.transform='scale(1.1)'"
+          >${pin.name.charAt(0).toUpperCase()}</div>
         `,
         className: 'custom-marker-wrapper',
-        iconSize: [30, 30],
-        iconAnchor: [15, 15],
+        iconSize: [32, 32],
+        iconAnchor: [16, 16],
       });
 
       const marker = L.marker([pin.lat, pin.lng], {
@@ -79,27 +85,10 @@ export const PinMarkers = ({ map, pins, onPinClick, isMapReady }: PinMarkersProp
         </div>
       `;
 
-      marker.bindPopup(popupContent, { closeButton: true, offset: [0, -15] });
-
       marker.on('click', (e) => {
         e.originalEvent?.stopPropagation();
         L.DomEvent.stopPropagation(e);
         onPinClick(pin);
-      });
-
-      marker.on('popupopen', () => {
-        const popupElement = marker.getPopup()?.getElement();
-        if (popupElement) {
-          const button = popupElement.querySelector('.pin-details-btn');
-          if (button) {
-            button.addEventListener('click', (e) => {
-              e.preventDefault();
-              e.stopPropagation();
-              marker.closePopup();
-              onPinClick(pin);
-            });
-          }
-        }
       });
 
       currentMarkers[pin.id] = marker;

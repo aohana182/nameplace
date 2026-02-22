@@ -75,10 +75,23 @@ export const PinDetailsSheet = ({ pin, isOpen, onClose, onEdit, onDelete }: PinD
   return (
     <>
       <Sheet open={isOpen} onOpenChange={handleOpenChange}>
-        <SheetContent side="bottom" className="h-[85vh] md:h-[80vh] max-h-[90vh] rounded-t-2xl bg-background border-0 shadow-2xl overflow-hidden">
+        <SheetContent 
+          side="bottom" 
+          className="h-auto max-h-[85vh] rounded-t-3xl bg-background border-0 shadow-2xl overflow-hidden [&>button:last-child]:hidden"
+          onPointerDownOutside={(e) => {
+            if (isEditing) e.preventDefault();
+          }}
+          onInteractOutside={(e) => {
+            if (isEditing) e.preventDefault();
+          }}
+        >
+          {/* Drag handle */}
+          <div className="flex justify-center pt-3 pb-1 cursor-grab" onClick={onClose}>
+            <div className="w-10 h-1 rounded-full bg-muted-foreground/30" />
+          </div>
           <SheetHeader className="pb-4 bg-background">
             <SheetTitle className="flex items-center justify-between">
-              <span className="font-serif">{isEditing ? "Edit Pin" : currentPin.name}</span>
+              <span className="font-serif text-xl">{isEditing ? "Edit Pin" : currentPin.name}</span>
               {!isEditing && (
                 <div className="flex gap-2">
                   <Button size="sm" variant="outline" onClick={handleEditClick} className="h-10 px-3 touch-manipulation rounded-lg" type="button"><Edit className="h-4 w-4 mr-1" /><span className="hidden sm:inline">Edit</span></Button>
