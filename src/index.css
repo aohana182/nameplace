@@ -125,6 +125,21 @@
     border: none !important;
   }
 
+  .custom-marker-wrapper {
+    background: transparent !important;
+    border: none !important;
+  }
+
+  .leaflet-marker-icon.custom-marker-wrapper {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  .leaflet-zoom-anim .leaflet-zoom-animated .custom-marker-wrapper,
+  .leaflet-zoom-anim .custom-marker-wrapper {
+    transition: none !important;
+  }
+
   @media (max-width: 768px) {
     .leaflet-control-container .leaflet-top.leaflet-right {
       top: 80px;
