@@ -30,6 +30,11 @@ export const useMapInitialization = ({ userLocation, locationStatus, onAddPin }:
       }).addTo(map);
 
       map.on('click', (e: L.LeafletMouseEvent) => {
+        // Don't trigger add-pin when clicking on an existing marker
+        const target = e.originalEvent?.target as HTMLElement;
+        if (target?.closest?.('.custom-pin-marker') || target?.closest?.('.custom-marker-wrapper')) {
+          return;
+        }
         onAddPin({ lng: e.latlng.lng, lat: e.latlng.lat });
       });
 
