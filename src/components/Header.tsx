@@ -14,7 +14,7 @@ export const Header = () => {
   };
 
   return (
-    <header className="bg-white border-b border-gray-200 px-4 py-3 shadow-sm relative z-50">
+    <header className="bg-background/80 backdrop-blur-lg border-b border-border/50 px-4 py-3 relative z-50">
       <div className="flex items-center justify-between min-h-[56px]">
         <HeaderLogo />
         {user ? (

@@ -21,7 +21,7 @@ interface PinEditFormProps {
 
 export const PinEditForm = ({ name, setName, description, setDescription, tags, setTags, availableTags, onAvailableTagsChange, isValid, onSave, onCancel }: PinEditFormProps) => {
   return (
-    <div className="space-y-4 relative z-10 bg-white p-1">
+    <div className="space-y-4 relative z-10 bg-background p-1">
       <PinNameField name={name} setName={setName} isValid={isValid} />
       <PinDescriptionField description={description} setDescription={setDescription} />
       <div className="space-y-2">
