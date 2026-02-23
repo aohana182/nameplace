@@ -49,7 +49,7 @@ const MapPage = () => {
 
       <FloatingActionButton onClick={locationHandler.handleFloatingButtonClick} />
       <AddPinModal isOpen={isAddingPin} onClose={handleCloseAddModal} onSave={handleSavePin} />
-      <PinDetailsSheet pin={selectedPin} isOpen={!!selectedPin} onClose={() => setSelectedPin(null)} onEdit={pinManager.handleEditPin} onDelete={pinManager.handleDeletePin} />
+      <PinDetailsSheet pin={selectedPin} isOpen={!!selectedPin} onClose={() => setSelectedPin(null)} onEdit={pinManager.handleEditPin} onDelete={(pinId) => { pinManager.handleDeletePin(pinId); setSelectedPin(null); }} />
     </AppLayout>
   );
 };
